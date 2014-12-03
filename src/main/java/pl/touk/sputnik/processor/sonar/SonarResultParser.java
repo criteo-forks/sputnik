@@ -50,7 +50,12 @@ class SonarResultParser {
             Map<String, Component> components = getComponents(report.getJSONArray("components"));
             for (int i = 0; i < issues.length(); i++) {
                 JSONObject issue = (JSONObject) issues.get(i);
+                if (!issue.getBoolean("isNew")) {
+                    log.debug("Skipping already indexed issue: {}", issue.toString());
+                    continue;
+                }
                 if (!issue.has("line")) {
+                    log.debug("Skipping an issue with no line information: {}", issue.toString());
                     continue;
                 }
                 int line = issue.getInt("line");
