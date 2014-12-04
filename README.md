@@ -39,7 +39,7 @@ codenarc.ruleSets=
 codenarc.excludes=**/*.java
 jslint.enabled=true
 sonar.enabled=true
-sonar.configurationFile=sonar-project.properties, sonar-runner.properties
+sonar.configurationFiles=sonar-project.properties, sonar-runner.properties
 sonar.verbose=false
 ```
 

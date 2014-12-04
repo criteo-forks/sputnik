@@ -44,7 +44,7 @@ public enum GeneralOption implements ConfigurationOption {
     CODE_NARC_EXCLUDES("codenarc.excludes", "CodeNarc exclude filter", ""),
 
     SONAR_ENABLED("sonar.enabled", "Sonar enabled", "false"),
-    SONAR_PROPERTIES("sonar.configurationFile", "Sonar base configuration", "sonar-properties.properties"),
+    SONAR_PROPERTIES("sonar.configurationFiles", "Sonar base configuration", "sonar-project.properties"),
     SONAR_VERBOSE("sonar.verbose", "Run sonar in verbose mode", "false"),
 
     JS_LINT_ENABLED("jslint.enabled", "JsLint enabled", "false");
