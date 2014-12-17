@@ -59,7 +59,7 @@ class SonarResultParser {
                     continue;
                 }
                 int line = issue.getInt("line");
-                String message = issue.getString("message");
+                String message = String.format("%s (Rule: %s)", issue.getString("message"), issue.getString("rule"));
                 String file = getIssueFilePath(issue.getString("component"), components);
                 result.add(new Violation(file, line, message, getSeverity(issue.getString("severity"))));
             }
