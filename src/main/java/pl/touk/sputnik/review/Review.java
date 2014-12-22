@@ -8,19 +8,19 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import pl.touk.sputnik.configuration.Configuration;
+import pl.touk.sputnik.configuration.ConfigurationHolder;
+import pl.touk.sputnik.configuration.GeneralOption;
 import pl.touk.sputnik.review.filter.FileFilter;
 import pl.touk.sputnik.review.transformer.FileTransformer;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 @Slf4j
 @Getter
 @Setter
 public class Review {
-    /* Source, severity, message, e.g. [Checkstyle] Info: This is bad */
-    private static final String COMMENT_FORMAT = "[%s] %s: %s";
-    private static final String PROBLEM_FORMAT = "There is a problem with %s: %s";
-
     private List<ReviewFile> files;
     private Map<Severity, Integer> violationCount = new EnumMap<>(Severity.class);
     private int totalViolationCount = 0;
@@ -58,7 +58,8 @@ public class Review {
     }
 
     public void addProblem(@NotNull String source, @NotNull String problem) {
-        problems.add(String.format(PROBLEM_FORMAT, source, problem));
+        problems.add(MessageFormat.format(ConfigurationHolder.instance().getProperty(
+                GeneralOption.PROBLEM_FORMAT), source, problem));
     }
 
     public void add(@NotNull String source, @NotNull ReviewResult reviewResult) {
@@ -80,7 +81,9 @@ public class Review {
     }
 
     private void addError(@NotNull ReviewFile reviewFile, @NotNull String source, int line, @Nullable String message, Severity severity) {
-        reviewFile.getComments().add(new Comment(line, String.format(COMMENT_FORMAT, source, severity, message)));
+        reviewFile.getComments().add(new Comment(line, MessageFormat.format(
+                ConfigurationHolder.instance().getProperty(GeneralOption.COMMENT_FORMAT),
+                source, severity, message)));
         incrementCounters(severity);
     }
 
